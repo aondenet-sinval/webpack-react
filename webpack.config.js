@@ -4,14 +4,31 @@ const path = require('path');
   module.exports = {
     entry: './src/index.js',
     mode: 'development',
+    module: {
+      rules: [
+        {
+        test: /\.(js|jsx)$/, // checks for .js or .jsx files
+        exclude: /(node_modules)/,
+        loader: "babel-loader",
+        options: { presets: ["@babel/env"] },
+      },
+      {
+        test: /\.css$/, //checks for .css files
+        use: ["style-loader", "css-loader"],
+      },
+      ]
+    },
+    resolve: { extensions: ["*", ".js", ".jsx"] },
     plugins: [
       new HtmlWebpackPlugin({
-      title: 'Caching',
+      title: 'Portfolio Sinval Gomes',
+      template: path.resolve(__dirname, './src/index.html'), // template file
+      filename: 'index.html', // output file
       }),
     ],
     output: {
       filename: '[name].[contenthash].js',
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, 'docs'),
       clean: true,
     },
     optimization: {
