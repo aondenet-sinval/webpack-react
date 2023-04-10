@@ -7,15 +7,23 @@ const path = require('path');
     module: {
       rules: [
         {
-        test: /\.(js|jsx)$/, // checks for .js or .jsx files
-        exclude: /(node_modules)/,
-        loader: "babel-loader",
-        options: { presets: ["@babel/env"] },
-      },
-      {
-        test: /\.css$/, //checks for .css files
-        use: ["style-loader", "css-loader"],
-      },
+          test: /\.(js|jsx)$/, // checks for .js or .jsx files
+          exclude: /(node_modules)/,
+          loader: "babel-loader",
+          options: { presets: ["@babel/env"] },
+        },
+        {
+          test: /\.css$/, //checks for .css files
+          use: ["style-loader", "css-loader"],
+        },
+        {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+            {
+              loader: 'file-loader',
+            },
+          ],
+        },
       ]
     },
     resolve: { extensions: ["*", ".js", ".jsx"] },
