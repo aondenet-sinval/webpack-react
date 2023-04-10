@@ -1,5 +1,6 @@
 const path = require('path');
-  const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { SourceMapDevToolPlugin } = require("webpack");
 
   module.exports = {
     entry: './src/index.js',
@@ -24,6 +25,11 @@ const path = require('path');
             },
           ],
         },
+        {
+          test: /\.js$/,
+          enforce: 'pre',
+          use: ['source-map-loader'],
+        },
       ]
     },
     resolve: { extensions: ["*", ".js", ".jsx"] },
@@ -33,9 +39,13 @@ const path = require('path');
       template: path.resolve(__dirname, './src/index.html'), // template file
       filename: 'index.html', // output file
       }),
+      new SourceMapDevToolPlugin({
+        filename: "[file].map"
+      }),
     ],
     output: {
       filename: '[name].[contenthash].js',
+      sourceMapFilename: "[name].[contenthash].js.map",
       path: path.resolve(__dirname, 'docs'),
       clean: true,
     },
